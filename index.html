@@ -33,7 +33,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px 6px;b
 .langbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.lang{font:inherit;font-weight:700;cursor:pointer;background:#fff;color:var(--g);border:2px solid var(--g);border-radius:99px;padding:9px 15px;display:flex;gap:8px;align-items:center}.lang span{background:var(--g);color:#fff;border-radius:99px;padding:2px 8px;font-size:11px}.lang.si{border-color:var(--red);color:var(--red)}.lang.si span{background:var(--red)}.lang.on{background:var(--g);color:#fff}.lang.on span{background:var(--gold);color:#222}.lang.si.on{background:var(--red);color:#fff}.lang.pr{background:var(--gold);border-color:var(--gold);color:#222}.lg{background:var(--g2);color:#fff}.lg.si{background:var(--red)}
 @media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body *{visibility:hidden}#doc,#doc *{visibility:visible}#doc{position:absolute;left:0;top:0;width:100%;border:0}}
 </style></head><body>
-<header><div><h1>🎄 MerryNest Pro</h1><p>Stock · Quotations · Invoices · Delivery · <span id="syncBadge">not connected</span> · v5 live</p></div>
+<header><div><h1>🎄 MerryNest Pro</h1><p>Stock · Quotations · Invoices · Delivery · <span id="syncBadge">not connected</span> · v6 live</p></div>
 <nav id="nav"><button data-t="dash">Overview</button><button data-t="run">Today</button><button data-t="stock">Stock</button><button data-t="docs">Quotes & invoices</button><button data-t="deliv">Deliveries</button><button data-t="set">Backup & business</button></nav></header>
 <main>
 <section class="tab" id="t-dash"><div class="stats" id="stats"></div><div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><h2>Low stock</h2><div id="lowList"></div></div><div class="card"><h2>Unpaid invoices</h2><div id="unpaidList"></div></div></div></section>
@@ -150,7 +150,7 @@ window.map1=id=>open('https://www.google.com/maps/dir/?api=1&travelmode=driving&
 $('vRoute').onclick=()=>{const a=$('vFilter').value;if(!a)return alert('Choose an area in the filter first.');const s=S.orders.filter(o=>o.area===a&&o.status!=='Delivered').slice(0,10);if(!s.length)return alert('No pending stops.');const last=s.pop();open('https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(place(last))+(s.length?'&waypoints='+encodeURIComponent(s.map(place).join('|')):''),'_blank','noopener');if(S.orders.filter(o=>o.area===a&&o.status!=='Delivered').length>10)alert('Google Maps takes about 10 stops. The first 10 were opened; deliver them, then open the route again.')};
 $('vFilter').onchange=renderAll;
 // Settings
-$('bSave').onclick=()=>{const OLDU=S.biz.url,OLDK=S.biz.key;S.biz={name:$('bName').value||'MerryNest',phone:$('bPhone').value,addr:$('bAddr').value,bk:$('bBk').value,br:$('bBr').value,ac:$('bAc').value,an:$('bAn').value,hol:$('bHol').value,url:$('bUrl').value.trim(),key:$('bKey').value};const ch=S.biz.url!==OLDU||S.biz.key!==OLDK;if(ch&&S.biz.url){S.ts=0;ready=false;save(true);pull(true)}else{save();alert('Saved.')}};
+$('bSave').onclick=()=>{const OLDU=S.biz.url,OLDK=S.biz.key;S.bts=Date.now();S.biz={name:$('bName').value||'MerryNest',phone:$('bPhone').value,addr:$('bAddr').value,bk:$('bBk').value,br:$('bBr').value,ac:$('bAc').value,an:$('bAn').value,hol:$('bHol').value,url:$('bUrl').value.trim(),key:$('bKey').value};const ch=S.biz.url!==OLDU||S.biz.key!==OLDK;if(ch&&S.biz.url){S.ts=0;ready=false;save(true);pull(true)}else{save();alert('Saved.')}};
 $('bkExp').onclick=()=>dl('merrynest-backup-'+today()+'.json',JSON.stringify(S),'application/json');
 $('bkImp').onclick=()=>$('bkFile').click();
 $('bkFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.items)||!Array.isArray(d.docs))throw 0;if(confirm('Replace all current data with this backup?')){S=Object.assign(S,d);save()}}catch(x){alert('That file is not a valid MerryNest backup.')}};r.readAsText(f);e.target.value=''};
@@ -159,11 +159,11 @@ const COLS=['items','docs','orders'],byId=(a,b)=>a.id<b.id?-1:1;let snap={};
 const rj=r=>JSON.stringify(r,(k,v)=>k==='u'||k==='synced'||k==='total'?undefined:v);
 function takeSnap(){snap={};COLS.forEach(c=>S[c].forEach(r=>snap[c+':'+r.id]=rj(r)))}
 function stamp(){S.del=S.del||{};const now=Date.now(),seen={};COLS.forEach(c=>S[c].forEach(r=>{const k=c+':'+r.id;seen[k]=1;if(snap[k]!==rj(r))r.u=now}));for(const k in snap)if(!seen[k])S.del[k]=now;takeSnap()}
-const sig=o=>JSON.stringify(COLS.map(c=>(o[c]||[]).map(x=>({...x,synced:0,total:0})).sort(byId)).concat([Object.keys(o.del||{}).length]));
+const sig=o=>JSON.stringify(COLS.map(c=>(o[c]||[]).map(x=>({...x,synced:0,total:0})).sort(byId)).concat([Object.keys(o.del||{}).length,{...(o.biz||{}),url:0,key:0}]));
 function merge(r){const del={...(r.del||{})};for(const k in (S.del||{}))del[k]=Math.max(del[k]||0,S.del[k]);
  COLS.forEach(c=>{const m=new Map();(r[c]||[]).forEach(x=>m.set(x.id,x));S[c].forEach(x=>{const y=m.get(x.id);if(!y||(x.u||0)>(y.u||0))m.set(x.id,{...x,synced:x.synced||(y&&y.synced)});else y.synced=y.synced||x.synced});S[c]=[...m.values()].filter(x=>!(del[c+':'+x.id]>(x.u||0))).sort(byId)});
  S.del=del;if(r.seq)S.seq={QT:Math.max(S.seq.QT||0,r.seq.QT||0),INV:Math.max(S.seq.INV||0,r.seq.INV||0)};
- if(r.biz&&(r.ts||0)>(S.ts||0))S.biz={...r.biz,url:S.biz.url,key:S.biz.key};S.ts=Math.max(S.ts||0,r.ts||0)}
+ if(r.biz&&(r.bts||0)>(S.bts||0)){S.biz={...r.biz,url:S.biz.url,key:S.biz.key};S.bts=r.bts}S.ts=Math.max(S.ts||0,r.ts||0)}
 const SENDING=new Set();let st,ready=false;
 function setSync(t,bad){const e=$('syncBadge');if(e){e.textContent=t;e.style.color=bad?'#ffb4a8':'#dce8de'}}
 const hm=()=>new Date().toLocaleTimeString('en-LK',{hour:'2-digit',minute:'2-digit'});
