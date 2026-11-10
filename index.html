@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#173d2b"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>MerryNest Pro | Stock, Quotes, Invoices & Delivery</title>
+<style>
+:root{--g:#173d2b;--g2:#245438;--cream:#f7f3e9;--gold:#d5ae58;--ink:#202820;--mut:#6d786f;--line:#e5e9e3;--bg:#f4f6f2;--card:#fff;--red:#a83232}
+@media(prefers-color-scheme:dark){:root{--bg:#121a15;--card:#1b261f;--ink:#e8efe9;--mut:#9fb0a3;--line:#2c3a31;--cream:#2a2a1e}}
+*{box-sizing:border-box}html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--g);color:#fff;padding:16px max(16px,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+header h1{font-size:19px;margin:0}header p{margin:0;font-size:12px;color:#dce8de}
+nav{display:flex;gap:6px;overflow-x:auto}nav button{background:#ffffff18;color:#fff;border:0;border-radius:9px;padding:9px 13px;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}nav button.on{background:var(--gold);color:#222}
+main{max-width:1120px;margin:18px auto;padding:0 14px 40px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}.stat span{font-size:12px;color:var(--mut)}.stat b{display:block;font-size:22px;color:var(--g2);margin-top:3px}
+@media(prefers-color-scheme:dark){.stat b{color:var(--gold)}}
+.grid{display:grid;grid-template-columns:350px 1fr;gap:14px;align-items:start}
+h2{font-size:17px;margin:0 0 12px}label{display:block;font-size:12px;font-weight:650;color:var(--mut);margin:0 0 4px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 10px;font:inherit;background:var(--card);color:var(--ink);margin-bottom:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{border:0;border-radius:9px;padding:9px 13px;font:inherit;font-weight:650;cursor:pointer;background:#edf2ed;color:var(--g)}.btn.p{background:var(--g2);color:#fff}.btn.d{background:#fff0ef;color:#9c2d2d}.btn.s{font-size:12px;padding:6px 9px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px}
+.top{display:flex;justify-content:space-between;gap:8px;align-items:start}.meta{font-size:12px;color:var(--mut)}
+.pill{font-size:11px;padding:3px 8px;border-radius:99px;background:#edf2ed;color:var(--g);white-space:nowrap}.pill.ok{background:#e6f5e9;color:#236b35}.pill.warn{background:#fff3dc;color:#855b0a}.pill.bad{background:#fde8e6;color:#9c2d2d}
+.empty{text-align:center;padding:24px;color:var(--mut);border:1px dashed var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}th:last-child,td:last-child,.r{text-align:right}
+.scroll{overflow-x:auto}.note{background:var(--cream);border-radius:10px;padding:9px 11px;font-size:12px;margin:8px 0}
+.tab{display:none}.tab.on{display:block}
+#doc{background:#fff;color:#202820;border-radius:12px;overflow:hidden;border:1px solid var(--line)}#doc h3{margin:0;font-size:22px;color:#173d2b}#doc .meta{color:#555}
+.dh{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}.tot{margin-left:auto;width:250px;margin-top:10px}.tot div{display:flex;justify-content:space-between;padding:3px 0}.tot .gt{font-weight:700;font-size:17px;border-top:2px solid #173d2b;margin-top:4px;padding-top:6px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+.stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important}input,select,textarea{font-size:16px}
+.cur{border:2px solid var(--g2);border-radius:16px;padding:16px;margin:10px 0 14px}.cur h2{font-size:22px;margin:8px 0 4px}.cur p{margin:4px 0}.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.big .btn{padding:14px 6px;text-align:center;text-decoration:none;font-size:15px}
+@media(max-width:820px){nav{position:fixed;left:0;right:0;bottom:0;background:var(--g);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:9}main{padding-bottom:90px}}
+.langbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.lang{font:inherit;font-weight:700;cursor:pointer;background:#fff;color:var(--g);border:2px solid var(--g);border-radius:99px;padding:9px 15px;display:flex;gap:8px;align-items:center}.lang span{background:var(--g);color:#fff;border-radius:99px;padding:2px 8px;font-size:11px}.lang.si{border-color:var(--red);color:var(--red)}.lang.si span{background:var(--red)}.lang.on{background:var(--g);color:#fff}.lang.on span{background:var(--gold);color:#222}.lang.si.on{background:var(--red);color:#fff}.lang.pr{background:var(--gold);border-color:var(--gold);color:#222}.lg{background:var(--g2);color:#fff}.lg.si{background:var(--red)}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body *{visibility:hidden}#doc,#doc *{visibility:visible}#doc{position:absolute;left:0;top:0;width:100%;border:0}}
+</style></head><body>
+<header><div><h1>🎄 MerryNest Pro</h1><p>Stock · Quotations · Invoices · Delivery · <span id="syncBadge">not connected</span> · v5 live</p></div>
+<nav id="nav"><button data-t="dash">Overview</button><button data-t="run">Today</button><button data-t="stock">Stock</button><button data-t="docs">Quotes & invoices</button><button data-t="deliv">Deliveries</button><button data-t="set">Backup & business</button></nav></header>
+<main>
+<section class="tab" id="t-dash"><div class="stats" id="stats"></div><div class="grid" style="grid-template-columns:1fr 1fr"><div class="card"><h2>Low stock</h2><div id="lowList"></div></div><div class="card"><h2>Unpaid invoices</h2><div id="unpaidList"></div></div></div></section>
+
+<section class="tab" id="t-run"><div class="card"><div class="row" style="margin-bottom:10px"><div style="flex:1"><label>Delivery day</label><input id="rDate" type="date" style="margin:0"></div><button class="btn p" id="rAll">Whole-day map</button></div><div id="rBody"></div></div></section>
+<section class="tab" id="t-stock"><div class="grid"><div class="card"><h2 id="itTitle">Add stock item</h2><input type="hidden" id="itId">
+<label>Item name *</label><input id="itName" placeholder="Bauble set (12 pcs)"><div class="two"><div><label>Code</label><input id="itCode" placeholder="BAU-12"></div><div><label>Quantity in stock</label><input id="itQty" type="number" min="0" value="0"></div></div>
+<div class="two"><div><label>Cost price (Rs.)</label><input id="itCost" type="number" min="0" value="0"></div><div><label>Selling price (Rs.)</label><input id="itPrice" type="number" min="0" value="0"></div></div>
+<label>Reorder level</label><input id="itLow" type="number" min="0" value="5"><button class="btn p" style="width:100%" id="itSave">Save item</button></div>
+<div class="card"><div class="top"><h2>Stock list</h2><button class="btn s" id="itCsv">Export CSV</button></div><input id="itSearch" placeholder="Search items"><div id="itList"></div></div></div></section>
+
+<section class="tab" id="t-docs"><div class="grid"><div class="card"><h2>New quotation / invoice</h2>
+<div class="two"><div><label>Type</label><select id="dType"><option value="QT">Quotation</option><option value="INV">Invoice</option></select></div><div><label>Date</label><input id="dDate" type="date"></div></div>
+<label>Customer *</label><input id="dCust"><div class="two"><div><label>Phone</label><input id="dPhone"></div><div><label>Area</label><input id="dArea" list="areas" placeholder="Type any area"></div></div>
+<label>Address</label><textarea id="dAddr" rows="2"></textarea>
+<label>Add item</label><div class="two"><select id="dItem"></select><input id="dQty" type="number" min="1" value="1"></div>
+<div class="row" style="margin-bottom:10px"><button class="btn s" id="dAdd">Add line</button><button class="btn s" id="dCustom">Add custom line</button></div>
+<div id="dLines"></div>
+<div class="two"><div><label>Discount (Rs.)</label><input id="dDisc" type="number" min="0" value="0"></div><div><label>Delivery fee (Rs.)</label><input id="dFee" type="number" min="0" value="0"></div></div>
+<label>Notes / payment terms</label><textarea id="dNote" rows="2"></textarea><div class="note" id="dSum"></div>
+<button class="btn p" style="width:100%" id="dSave">Save document</button></div>
+<div class="card"><h2>Saved documents</h2><div class="row" style="margin-bottom:10px"><select id="dFilter" style="width:auto;margin:0"><option value="">All</option><option value="QT">Quotations</option><option value="INV">Invoices</option><option value="LEAD">Open leads</option></select></div><div id="docList"></div><div id="preview" style="margin-top:12px"></div></div></div></section>
+
+<section class="tab" id="t-deliv"><div class="grid"><div class="card"><h2>Add delivery</h2><label>Customer *</label><input id="vCust"><div class="two"><div><label>Phone</label><input id="vPhone"></div><div><label>Area</label><input id="vArea" list="areas" placeholder="Type any area"><datalist id="areas"></datalist></div></div>
+<label>Address *</label><textarea id="vAddr" rows="2"></textarea><label>Order details *</label><input id="vProd"><div class="two"><div><label>Confirmed date</label><input id="vConf" type="date"></div><div><label>Delivery fee</label><input id="vFee" type="number" min="0" value="0"></div></div>
+<div class="note">Window: 4th–5th business day after confirmation, Mon–Fri, skipping dates listed under Backup & business.</div><button class="btn p" style="width:100%" id="vSave">Save delivery</button></div>
+<div class="card"><h2>Deliveries</h2><div class="row" style="margin-bottom:10px"><select id="vFilter" style="width:auto;margin:0"><option value="">All areas</option><option>Panadura</option><option>Moratuwa</option></select><button class="btn p s" id="vRoute">Open route (pending, filtered area)</button></div><div id="vList"></div></div></div></section>
+
+<section class="tab" id="t-set"><div class="grid"><div class="card"><h2>Business details (shown on documents)</h2><label>Business name</label><input id="bName"><label>Phone</label><input id="bPhone"><label>Address</label><textarea id="bAddr" rows="2"></textarea><label>Bank</label><input id="bBk" placeholder="######"><div class="two"><div><label>Branch</label><input id="bBr" placeholder="######"></div><div><label>Account no</label><input id="bAc" placeholder="######"></div></div><label>Account name</label><input id="bAn" placeholder="######"><label>Google Sheet sync URL (Apps Script web app)</label><input id="bUrl" placeholder="https://script.google.com/macros/s/.../exec"><label>Sync password</label><input id="bKey"><label>Holidays to skip (YYYY-MM-DD, comma separated)</label><textarea id="bHol" rows="3" placeholder="2026-12-25, 2026-12-23"></textarea><button class="btn p" id="bSave">Save details</button></div>
+<div class="card"><h2>Backup</h2><p class="meta">Data lives only in this browser. Download a backup often, and restore it on a new phone.</p><div class="row"><button class="btn p" id="bkExp">Download backup</button><button class="btn" id="bkImp">Restore backup</button><button class="btn" id="syncNow">Send to Google Sheet now</button><button class="btn" id="pullNow">Load from Google Sheet</button></div><input type="file" id="bkFile" accept=".json" hidden></div></div></section>
+</main>
+<script>
+const KEY='merrynest_pro_v1',OLD='merrynest_delivery_orders_v1';
+let S={orders:[],items:[],docs:[],seq:{QT:0,INV:0},biz:{name:'MerryNest',phone:'',addr:'Panadura & Moratuwa',bank:'',hol:''}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r));else{const o=JSON.parse(localStorage.getItem(OLD)||'[]');if(Array.isArray(o))S.orders=o}}catch(e){}
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rs=n=>'Rs. '+Number(n||0).toLocaleString('en-LK'),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`,today=()=>iso(new Date());
+const pd=s=>{const[a,b,c]=String(s||today()).split('-').map(Number);return new Date(a,b-1,c,12)};
+const fmt=s=>s?pd(s).toLocaleDateString('en-LK',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const hols=()=>new Set(S.biz.hol.split(/[,\s]+/).filter(Boolean));
+function addBiz(s,n){const h=hols();let d=pd(s),c=0;while(c<n){d.setDate(d.getDate()+1);if(d.getDay()&&d.getDay()<6&&!h.has(iso(d)))c++}return iso(d)}
+function save(k){if(!k){S.ts=Date.now();stamp()}try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){alert('Could not save: browser storage is unavailable.')}renderAll();syncState()}
+let lines=[],tab='dash';
+function show(t){tab=t;document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('on',e.id==='t-'+t));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));renderAll()}
+$('nav').onclick=e=>{if(e.target.dataset.t)show(e.target.dataset.t)};
+const low=i=>Number(i.qty)<=Number(i.low);
+const dTot=d=>{const sub=d.lines.reduce((a,l)=>a+l.qty*l.price,0);return{sub,total:Math.max(0,sub-d.disc)+Number(d.fee||0)}};
+function renderAll(){
+ const inv=S.docs.filter(d=>d.type==='INV'),unpaid=inv.filter(d=>!d.paid),val=S.items.reduce((a,i)=>a+i.qty*i.cost,0);
+ $('stats').innerHTML=[['Stock value (cost)',rs(val)],['Low-stock items',S.items.filter(low).length],['Unpaid invoices',rs(unpaid.reduce((a,d)=>a+dTot(d).total,0))],['Pending deliveries',S.orders.filter(o=>o.status!=='Delivered').length],['Open leads',S.docs.filter(d=>d.type==='QT'&&!['Won','Lost'].includes(d.lead)).length]].map(x=>`<div class="card stat"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');
+ $('lowList').innerHTML=S.items.filter(low).map(i=>`<div class="item top"><b>${esc(i.name)}</b><span class="pill bad">${i.qty} left</span></div>`).join('')||'<div class="empty">Nothing is running low.</div>';
+ $('unpaidList').innerHTML=unpaid.map(d=>`<div class="item top"><div><b>${d.no}</b> ${esc(d.cust)}</div><b>${rs(dTot(d).total)}</b></div>`).join('')||'<div class="empty">No unpaid invoices.</div>';
+ const q=$('itSearch').value.toLowerCase();
+ $('itList').innerHTML=S.items.filter(i=>(i.name+i.code).toLowerCase().includes(q)).map(i=>`<div class="item"><div class="top"><div><b>${esc(i.name)}</b> <span class="meta">${esc(i.code)}</span><div class="meta">Cost ${rs(i.cost)} · Price ${rs(i.price)} · Margin ${i.price?Math.round((i.price-i.cost)/i.price*100):0}%</div></div><span class="pill ${i.qty<=0?'bad':low(i)?'warn':'ok'}">${i.qty} in stock</span></div><div class="row" style="margin-top:8px"><button class="btn s" onclick="adj('${i.id}',1)">+ Add</button><button class="btn s" onclick="adj('${i.id}',-1)">− Remove</button><button class="btn s" onclick="editIt('${i.id}')">Edit</button><button class="btn s d" onclick="delIt('${i.id}')">Delete</button></div></div>`).join('')||'<div class="empty">No items yet. Add your first product.</div>';
+ const _sel=$('dItem').value;$('dItem').innerHTML=S.items.map(i=>`<option value="${i.id}">${esc(i.name)} (${i.qty})</option>`).join('')||'<option value="">No stock items</option>';if(_sel&&[...$('dItem').options].some(o=>o.value===_sel))$('dItem').value=_sel;
+ drawLines();renderRun();areasUI();
+ const f=$('dFilter').value;
+ $('docList').innerHTML=S.docs.filter(d=>!f||(f==='LEAD'?d.type==='QT'&&!['Won','Lost'].includes(d.lead):d.type===f)).slice().reverse().map(d=>`<div class="item"><div class="top"><div><b>${d.no}</b> · ${esc(d.cust)}<div class="meta">${fmt(d.date)} · ${rs(dTot(d).total)}</div></div><span class="pill ${d.type==='INV'?(d.paid?'ok':'warn'):d.lead==='Won'?'ok':d.lead==='Lost'?'bad':d.lead==='Follow-up'?'warn':''}">${d.type==='QT'?'Lead: '+(d.lead||'Open')+(d.follow?' · '+fmt(d.follow):''):d.paid?'Paid':'Unpaid'}</span></div><div class="row" style="margin-top:8px"><button class="btn s lg" onclick="view('${d.id}','en')">English</button><button class="btn s lg si" onclick="view('${d.id}','si')">සිංහල</button><button class="btn s" onclick="resend('${d.id}')">Send to Drive</button>${d.type==='QT'?`<button class="btn s p" onclick="toInv('${d.id}')">Make invoice</button><button class="btn s" onclick="lead('${d.id}','Follow-up')">Follow up</button><button class="btn s" onclick="lead('${d.id}','Lost')">Lost</button><a class="btn s" target="_blank" rel="noopener" href="https://wa.me/${wa(d.phone)}">WhatsApp</a>`:`<button class="btn s" onclick="pay('${d.id}')">${d.paid?'Mark unpaid':'Mark paid'}</button><button class="btn s" onclick="toDel('${d.id}')">Add delivery</button>`}<button class="btn s d" onclick="delDoc('${d.id}')">Delete</button></div></div>`).join('')||'<div class="empty">No documents yet.</div>';
+ const a=$('vFilter').value;
+ $('vList').innerHTML=S.orders.filter(o=>!a||o.area===a).sort((x,y)=>x.confirmed.localeCompare(y.confirmed)).map(o=>`<div class="item"><div class="top"><div><b>${esc(o.customer)}</b><div class="meta">${esc(o.area)} · ${esc(o.phone||'No phone')}</div></div><span class="pill ${o.status==='Delivered'?'ok':o.status!=='Pending'?'warn':''}">${o.status}</span></div><div class="meta" style="margin:6px 0">${esc(o.product)}<br>${esc(o.address)}<br>Window: <b>${fmt(addBiz(o.confirmed,4))} – ${fmt(addBiz(o.confirmed,5))}</b> · Fee ${rs(o.fee)}</div><div class="row"><button class="btn s" onclick="plan('${o.id}')">${o.day?'Planned '+fmt(o.day):'Plan for day'}</button><button class="btn s" onclick="map1('${o.id}')">Map</button><button class="btn s" onclick="nextSt('${o.id}')">Update status</button><button class="btn s d" onclick="delOrd('${o.id}')">Delete</button></div></div>`).join('')||'<div class="empty">No deliveries yet.</div>';
+ if(document.activeElement.closest('#t-set')==null){['Name','Phone','Addr','Bk','Br','Ac','An','Hol','Url','Key'].forEach(k=>{const e=$('b'+k);if(e!==document.activeElement)e.value=S.biz[k.toLowerCase()]||''})}
+}
+// Stock
+$('itSave').onclick=()=>{const n=$('itName').value.trim();if(!n)return alert('Enter an item name.');const id=$('itId').value||uid();const it={id,name:n,code:$('itCode').value.trim(),qty:+$('itQty').value||0,cost:+$('itCost').value||0,price:+$('itPrice').value||0,low:+$('itLow').value||0};const i=S.items.findIndex(x=>x.id===id);i>=0?S.items[i]=it:S.items.push(it);['itId','itName','itCode'].forEach(k=>$(k).value='');['itQty','itCost','itPrice'].forEach(k=>$(k).value=0);$('itLow').value=5;$('itTitle').textContent='Add stock item';save()};
+window.editIt=id=>{const i=S.items.find(x=>x.id===id);$('itId').value=id;$('itName').value=i.name;$('itCode').value=i.code;$('itQty').value=i.qty;$('itCost').value=i.cost;$('itPrice').value=i.price;$('itLow').value=i.low;$('itTitle').textContent='Edit item';scrollTo({top:0,behavior:'smooth'})};
+window.adj=(id,s)=>{const v=parseInt(prompt(s>0?'Quantity received:':'Quantity to remove:','1'),10);if(!v||v<1)return;const i=S.items.find(x=>x.id===id);i.qty=Math.max(0,i.qty+s*v);save()};
+window.delIt=id=>{if(confirm('Delete this item? Existing documents keep their lines.')){S.items=S.items.filter(i=>i.id!==id);save()}};
+$('itSearch').oninput=renderAll;
+$('itCsv').onclick=()=>dl('merrynest-stock.csv','\ufeff'+['Code,Name,Qty,Cost,Price,Reorder'].concat(S.items.map(i=>[i.code,i.name,i.qty,i.cost,i.price,i.low].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','))).join('\r\n'),'text/csv');
+function dl(n,t,m){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+// Documents
+function drawLines(){const sub=lines.reduce((a,l)=>a+l.qty*l.price,0),t=Math.max(0,sub-(+$('dDisc').value||0))+(+$('dFee').value||0);
+ $('dLines').innerHTML=lines.length?`<div class="scroll"><table><tr><th>Item</th><th>Qty</th><th>Price</th><th></th></tr>${lines.map((l,i)=>`<tr><td>${esc(l.name)}</td><td>${l.qty}</td><td>${l.price}</td><td><button class="btn s d" onclick="lines.splice(${i},1);drawLines()">×</button></td></tr>`).join('')}</table></div>`:'<div class="meta" style="margin-bottom:10px">No lines yet.</div>';
+ $('dSum').innerHTML=`Subtotal ${rs(sub)} · <b>Total ${rs(t)}</b>`}
+$('dAdd').onclick=()=>{const i=S.items.find(x=>x.id===$('dItem').value);if(!i)return alert('Add stock items first, or use a custom line.');lines.push({id:i.id,name:i.name,qty:Math.max(1,+$('dQty').value||1),price:i.price});drawLines()};
+$('dCustom').onclick=()=>{const n=prompt('Description:');if(!n)return;const p=+prompt('Unit price (Rs.):','0')||0;lines.push({id:null,name:n,qty:Math.max(1,+$('dQty').value||1),price:p});drawLines()};
+$('dDisc').oninput=$('dFee').oninput=drawLines;$('dFilter').onchange=renderAll;
+function deduct(d,sign){d.lines.forEach(l=>{const i=S.items.find(x=>x.id===l.id);if(i)i.qty=Math.max(0,i.qty-sign*l.qty)});d.stock=sign>0}
+$('dSave').onclick=()=>{const c=$('dCust').value.trim();if(!c||!lines.length)return alert('Enter a customer and add at least one line.');const type=$('dType').value;
+ const short=type==='INV'?lines.filter(l=>{const i=S.items.find(x=>x.id===l.id);return i&&i.qty<l.qty}):[];
+ if(short.length&&!confirm('Not enough stock for: '+short.map(l=>l.name).join(', ')+'. Continue anyway?'))return;
+ const d={id:uid(),type,no:type+'-'+String(++S.seq[type]).padStart(4,'0'),date:$('dDate').value||today(),cust:c,phone:$('dPhone').value,area:$('dArea').value.trim(),addr:$('dAddr').value,lines:lines.map(l=>({...l})),disc:+$('dDisc').value||0,fee:+$('dFee').value||0,note:$('dNote').value,paid:false,stock:false,lead:'Open',follow:''};
+ if(type==='INV')deduct(d,1);S.docs.push(d);lines=[];['dCust','dPhone','dAddr','dNote'].forEach(k=>$(k).value='');$('dDisc').value=0;$('dFee').value=0;save();view(d.id)};
+window.toInv=id=>{const q=S.docs.find(x=>x.id===id),short=q.lines.filter(l=>{const i=S.items.find(x=>x.id===l.id);return i&&i.qty<l.qty});if(short.length&&!confirm('Not enough stock for: '+short.map(l=>l.name).join(', ')+'. Continue anyway?'))return;
+ const d={...q,id:uid(),type:'INV',no:'INV-'+String(++S.seq.INV).padStart(4,'0'),date:today(),ref:q.no,synced:false,paid:false,lines:q.lines.map(l=>({...l}))};q.lead='Won';deduct(d,1);S.docs.push(d);save();view(d.id)};
+window.lead=(id,t)=>{const d=S.docs.find(x=>x.id===id);d.lead=t;if(t==='Follow-up'){const f=prompt('Follow-up date (YYYY-MM-DD):',addBiz(today(),2));if(!f)return;d.follow=f}save()};
+window.resend=id=>{if(!S.biz.url)return alert('Save the sync URL in Backup & business first.');S.docs.find(x=>x.id===id).synced=false;view(id);alert('Sent to Drive. PDF appears in 10-20 seconds.')};
+window.pay=id=>{const d=S.docs.find(x=>x.id===id);d.paid=!d.paid;save()};
+window.delDoc=id=>{const d=S.docs.find(x=>x.id===id);if(!confirm('Delete '+d.no+'?'+(d.stock?' Its stock will be returned.':'')))return;if(d.stock)deduct(d,-1);S.docs=S.docs.filter(x=>x.id!==id);$('preview').innerHTML='';save()};
+window.toDel=id=>{const d=S.docs.find(x=>x.id===id);S.orders.push({id:uid(),customer:d.cust,phone:d.phone,area:d.area||'Other',address:d.addr||'',product:d.lines.map(l=>l.name+' × '+l.qty).join(', ')+' ('+d.no+')',fee:d.fee,confirmed:today(),status:'Pending'});save();alert('Added to Deliveries.');show('deliv')};
+const T={en:{qt:'QUOTATION',inv:'INVOICE',no:'No',date:'Date',ref:'Ref',valid:'Valid for 14 days',paid:'PAID',bill:'Bill to',desc:'Description',qty:'Qty',unit:'Unit price',amt:'Amount',sub:'Subtotal',disc:'Discount',del:'Delivery',total:'Total',notes:'Notes',bank:'Bank details',bn:'Bank',br:'Branch',ac:'Account no',an:'Account name',pay:'Please deposit to the account below and send the payment slip to us on WhatsApp.',terms:'Delivery within 4–5 working days after order confirmation.',thanks:'Thank you for choosing',tag:'Make Your Christmas Special.'},
+si:{qt:'මිල ගණන් පත්‍රය',inv:'ඉන්වොයිසිය',no:'අංකය',date:'දිනය',ref:'යොමුව',valid:'දින 14ක් සඳහා වලංගුයි',paid:'ගෙවා ඇත',bill:'ගනුදෙනුකරු',desc:'විස්තරය',qty:'ප්‍රමාණය',unit:'ඒකක මිල',amt:'මුදල',sub:'උප එකතුව',disc:'වට්ටම',del:'බෙදාහැරීමේ ගාස්තුව',total:'මුළු මුදල',notes:'සටහන්',bank:'බැංකු විස්තර',bn:'බැංකුව',br:'ශාඛාව',ac:'ගිණුම් අංකය',an:'ගිණුමේ නම',pay:'කරුණාකර පහත ගිණුමට මුදල් බැර කර, රිසිට්පත WhatsApp මගින් අපට එවන්න.',terms:'ඇණවුම තහවුරු කළ දින සිට වැඩ කරන දින 4–5ක් ඇතුළත බෙදාහරිනු ලැබේ.',thanks:'ඔබ අප තෝරාගත්තාට ස්තූතියි',tag:'ඔබේ නත්තල විශේෂ කරගන්න.'}};
+function docHtml(d,lang){const t=T[lang],b=S.biz,tt=dTot(d),I=d.type==='INV',H=v=>esc(v||'######'),td='padding:8px;border-bottom:1px solid #e5e9e3;font-size:13px;';
+ return `<div id="doc" style="font-family:'Noto Sans Sinhala','Iskoola Pota',Arial,sans-serif;color:#202820;background:#fff"><table style="width:100%;border-collapse:collapse;background:#173d2b;color:#fff"><tr><td style="padding:18px;border:0"><div style="font-size:24px;font-weight:700">${esc(b.name)}</div><div style="font-size:12px;color:#dce8de">${esc(b.addr)}<br>${esc(b.phone)}</div></td><td style="padding:18px;text-align:right;border:0"><div style="font-size:21px;font-weight:700;color:#d5ae58">${I?t.inv:t.qt}</div><div style="font-size:12px">${t.no}: ${d.no}<br>${t.date}: ${fmt(d.date)}${d.ref?'<br>'+t.ref+': '+d.ref:''}${!I?'<br>'+t.valid:''}</div></td></tr></table><div style="height:5px;background:#d5ae58"></div>
+<div style="padding:16px 20px"><div style="font-size:11px;color:#6d786f;letter-spacing:1px">${t.bill}</div><b style="font-size:16px">${esc(d.cust)}</b><br><span style="font-size:12px;color:#555">${esc(d.phone)}${d.addr?' · '+esc(d.addr):''}</span></div>
+<div style="padding:0 20px"><table style="width:100%;border-collapse:collapse"><tr><th style="background:#173d2b;color:#fff;padding:8px;text-align:left;font-size:12px">${t.desc}</th><th style="background:#173d2b;color:#fff;padding:8px;text-align:right;font-size:12px">${t.qty}</th><th style="background:#173d2b;color:#fff;padding:8px;text-align:right;font-size:12px">${t.unit}</th><th style="background:#173d2b;color:#fff;padding:8px;text-align:right;font-size:12px">${t.amt}</th></tr>${d.lines.map((l,i)=>`<tr style="background:${i%2?'#f7f3e9':'#fff'}"><td style="${td}">${esc(l.name)}</td><td style="${td}text-align:right">${l.qty}</td><td style="${td}text-align:right">${rs(l.price)}</td><td style="${td}text-align:right">${rs(l.qty*l.price)}</td></tr>`).join('')}</table>
+<table style="width:270px;margin:10px 0 0 auto;border-collapse:collapse"><tr><td style="${td}">${t.sub}</td><td style="${td}text-align:right">${rs(tt.sub)}</td></tr>${d.disc?`<tr><td style="${td}">${t.disc}</td><td style="${td}text-align:right">− ${rs(d.disc)}</td></tr>`:''}<tr><td style="${td}">${t.del}</td><td style="${td}text-align:right">${rs(d.fee)}</td></tr><tr><td style="padding:9px 8px;background:#173d2b;color:#fff;font-weight:700">${t.total}</td><td style="padding:9px 8px;background:#173d2b;color:#d5ae58;font-weight:700;text-align:right;font-size:15px">${rs(tt.total)}</td></tr></table>${I&&d.paid?`<div style="text-align:right;margin-top:8px"><span style="color:#236b35;border:2px solid #236b35;padding:3px 10px;font-weight:700">${t.paid}</span></div>`:''}</div>
+${d.note?`<div style="padding:12px 20px 0;font-size:12px"><b>${t.notes}:</b> ${esc(d.note)}</div>`:''}
+<div style="margin:16px 20px;padding:12px 14px;background:#f7f3e9;border:1px solid #d5ae58;border-left:6px solid #d5ae58"><div style="font-weight:700;color:#173d2b;font-size:14px;margin-bottom:4px">${t.bank}</div><div style="font-size:11px;color:#555;margin-bottom:6px">${t.pay}</div><table style="border-collapse:collapse;font-size:13px"><tr><td style="padding:2px 14px 2px 0;color:#6d786f">${t.bn}</td><td><b>${H(b.bk)}</b></td></tr><tr><td style="padding:2px 14px 2px 0;color:#6d786f">${t.br}</td><td><b>${H(b.br)}</b></td></tr><tr><td style="padding:2px 14px 2px 0;color:#6d786f">${t.ac}</td><td><b>${H(b.ac)}</b></td></tr><tr><td style="padding:2px 14px 2px 0;color:#6d786f">${t.an}</td><td><b>${H(b.an)}</b></td></tr></table></div>
+<div style="padding:4px 20px 18px;text-align:center;font-size:11px;color:#6d786f">${t.terms}<br>${t.thanks} ${esc(b.name)}.<br><b style="color:#a83232">${t.tag}</b></div></div>`}
+window.view=(id,lang)=>{const d=S.docs.find(x=>x.id===id);lang=lang||'en';
+ $('preview').innerHTML=`<div class="langbar"><button class="lang ${lang==='en'?'on':''}" onclick="view('${id}','en')"><span>EN</span>English</button><button class="lang si ${lang==='si'?'on':''}" onclick="view('${id}','si')"><span>සිං</span>සිංහල</button><button class="lang pr" onclick="print()">🖨 Print / PDF</button></div>${docHtml(d,lang)}`;
+ $('preview').scrollIntoView({behavior:'smooth'});
+ if(!d.synced&&S.biz.url&&!SENDING.has(d.id)){SENDING.add(d.id);Promise.all(['en','si'].map(l=>post({action:'doc',type:d.type,no:d.no,cust:d.cust,lang:l.toUpperCase(),html:docHtml(d,l)}))).then(r=>{SENDING.delete(d.id);if(r.every(Boolean)){d.synced=true;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}})}};
+function areasUI(){const ar=[...new Set(['Panadura','Moratuwa',...S.orders.map(o=>o.area),...S.docs.map(d=>d.area)].filter(Boolean))];$('areas').innerHTML=ar.map(a=>`<option value="${esc(a)}">`).join('');
+ const vf=$('vFilter'),cur=vf.value,oa=[...new Set(S.orders.map(o=>o.area).filter(Boolean))];vf.innerHTML='<option value="">All areas</option>'+oa.map(a=>`<option>${esc(a)}</option>`).join('');vf.value=oa.includes(cur)?cur:''}
+// Delivery
+$('vSave').onclick=()=>{const c=$('vCust').value.trim(),a=$('vAddr').value.trim(),p=$('vProd').value.trim();if(!c||!a||!p)return alert('Customer, address and order details are required.');S.orders.push({id:uid(),customer:c,phone:$('vPhone').value,area:$('vArea').value.trim()||'Other',address:a,product:p,fee:+$('vFee').value||0,confirmed:$('vConf').value||today(),status:'Pending'});['vCust','vPhone','vAddr','vProd'].forEach(k=>$(k).value='');$('vFee').value=0;save()};
+window.nextSt=id=>{const o=S.orders.find(x=>x.id===id),q=['Pending','Out for delivery','Delivered'];o.status=q[(q.indexOf(o.status)+1)%3];save()};
+window.delOrd=id=>{if(confirm('Delete this delivery?')){S.orders=S.orders.filter(o=>o.id!==id);save()}};
+const place=o=>o.address+', '+o.area+', Sri Lanka';
+window.map1=id=>open('https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(place(S.orders.find(o=>o.id===id))),'_blank','noopener');
+$('vRoute').onclick=()=>{const a=$('vFilter').value;if(!a)return alert('Choose an area in the filter first.');const s=S.orders.filter(o=>o.area===a&&o.status!=='Delivered').slice(0,10);if(!s.length)return alert('No pending stops.');const last=s.pop();open('https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(place(last))+(s.length?'&waypoints='+encodeURIComponent(s.map(place).join('|')):''),'_blank','noopener');if(S.orders.filter(o=>o.area===a&&o.status!=='Delivered').length>10)alert('Google Maps takes about 10 stops. The first 10 were opened; deliver them, then open the route again.')};
+$('vFilter').onchange=renderAll;
+// Settings
+$('bSave').onclick=()=>{const OLDU=S.biz.url,OLDK=S.biz.key;S.biz={name:$('bName').value||'MerryNest',phone:$('bPhone').value,addr:$('bAddr').value,bk:$('bBk').value,br:$('bBr').value,ac:$('bAc').value,an:$('bAn').value,hol:$('bHol').value,url:$('bUrl').value.trim(),key:$('bKey').value};const ch=S.biz.url!==OLDU||S.biz.key!==OLDK;if(ch&&S.biz.url){S.ts=0;ready=false;save(true);pull(true)}else{save();alert('Saved.')}};
+$('bkExp').onclick=()=>dl('merrynest-backup-'+today()+'.json',JSON.stringify(S),'application/json');
+$('bkImp').onclick=()=>$('bkFile').click();
+$('bkFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.items)||!Array.isArray(d.docs))throw 0;if(confirm('Replace all current data with this backup?')){S=Object.assign(S,d);save()}}catch(x){alert('That file is not a valid MerryNest backup.')}};r.readAsText(f);e.target.value=''};
+// Sync, run day
+const COLS=['items','docs','orders'],byId=(a,b)=>a.id<b.id?-1:1;let snap={};
+const rj=r=>JSON.stringify(r,(k,v)=>k==='u'||k==='synced'||k==='total'?undefined:v);
+function takeSnap(){snap={};COLS.forEach(c=>S[c].forEach(r=>snap[c+':'+r.id]=rj(r)))}
+function stamp(){S.del=S.del||{};const now=Date.now(),seen={};COLS.forEach(c=>S[c].forEach(r=>{const k=c+':'+r.id;seen[k]=1;if(snap[k]!==rj(r))r.u=now}));for(const k in snap)if(!seen[k])S.del[k]=now;takeSnap()}
+const sig=o=>JSON.stringify(COLS.map(c=>(o[c]||[]).map(x=>({...x,synced:0,total:0})).sort(byId)).concat([Object.keys(o.del||{}).length]));
+function merge(r){const del={...(r.del||{})};for(const k in (S.del||{}))del[k]=Math.max(del[k]||0,S.del[k]);
+ COLS.forEach(c=>{const m=new Map();(r[c]||[]).forEach(x=>m.set(x.id,x));S[c].forEach(x=>{const y=m.get(x.id);if(!y||(x.u||0)>(y.u||0))m.set(x.id,{...x,synced:x.synced||(y&&y.synced)});else y.synced=y.synced||x.synced});S[c]=[...m.values()].filter(x=>!(del[c+':'+x.id]>(x.u||0))).sort(byId)});
+ S.del=del;if(r.seq)S.seq={QT:Math.max(S.seq.QT||0,r.seq.QT||0),INV:Math.max(S.seq.INV||0,r.seq.INV||0)};
+ if(r.biz&&(r.ts||0)>(S.ts||0))S.biz={...r.biz,url:S.biz.url,key:S.biz.key};S.ts=Math.max(S.ts||0,r.ts||0)}
+const SENDING=new Set();let st,ready=false;
+function setSync(t,bad){const e=$('syncBadge');if(e){e.textContent=t;e.style.color=bad?'#ffb4a8':'#dce8de'}}
+const hm=()=>new Date().toLocaleTimeString('en-LK',{hour:'2-digit',minute:'2-digit'});
+async function post(b){if(!S.biz.url)return false;const body=JSON.stringify({key:S.biz.key,...b});
+ try{const r=await fetch(S.biz.url,{method:'POST',headers:{'Content-Type':'text/plain'},body});const j=await r.json();if(j.ok){setSync('synced '+hm());return true}setSync('wrong sync password',true);return false}
+ catch(e){try{await fetch(S.biz.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body});setSync('sent, unconfirmed '+hm())}catch(x){setSync('offline, not synced',true)}return true}}
+const isEmpty=()=>!S.items.length&&!S.docs.length&&!S.orders.length;
+function syncState(){clearTimeout(st);if(!ready||isEmpty())return;st=setTimeout(()=>post({action:'state',data:{...S,biz:{...S.biz,url:'',key:''},docs:S.docs.map(d=>({...d,total:dTot(d).total}))}}),1500)}
+$('syncNow').onclick=()=>{if(!S.biz.url)return alert('Save the Google Sheet sync URL first.');if(!confirm('Send THIS device\'s data to the Sheet? It will overwrite what is in the Sheet now.'))return;ready=true;syncState();alert('Sending. The top bar will say "synced" when done.')};
+const wa=p=>{let n=String(p||'').replace(/\D/g,'');if(n[0]==='0')n='94'+n.slice(1);return n};
+const rd=()=>$('rDate').value||today();
+function runStops(){const d=rd();return S.orders.filter(o=>o.status!=='Delivered'&&(o.day===d||(!o.day&&addBiz(o.confirmed,4)<=d))).sort((a,b)=>a.area.localeCompare(b.area)||a.confirmed.localeCompare(b.confirmed))}
+function renderRun(){const s=runStops(),n=S.orders.filter(o=>o.status==='Delivered'&&o.doneOn===rd()).length;
+ if(!s.length){$('rBody').innerHTML='<div class="empty">No stops left for this day.'+(n?' '+n+' delivered.':'')+'</div>';return}
+ const c=s[0];
+ $('rBody').innerHTML=`<div class="meta">${n} delivered · ${s.length} left</div><div class="cur"><span class="pill warn">Next stop · ${esc(c.area)}</span><h2>${esc(c.customer)}</h2><p>${esc(c.address)}</p><p class="meta">${esc(c.product)}</p><div class="big"><button class="btn p" onclick="map1('${c.id}')">Navigate</button><a class="btn" href="tel:${esc(c.phone)}">Call</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${wa(c.phone)}">WhatsApp</a></div><button class="btn p" style="width:100%;margin-top:8px;background:#236b35;padding:15px" onclick="markDone('${c.id}')">Delivered ✓ Next stop</button><button class="btn s" style="margin-top:8px" onclick="later('${c.id}')">Postpone to next working day</button></div>${s.slice(1).map((o,i)=>`<div class="item top"><div><b>${i+2}. ${esc(o.customer)}</b><div class="meta">${esc(o.address)}</div></div><button class="btn s" onclick="map1('${o.id}')">Map</button></div>`).join('')}`}
+window.markDone=id=>{const o=S.orders.find(x=>x.id===id);o.status='Delivered';o.doneOn=today();save()};
+window.later=id=>{S.orders.find(x=>x.id===id).day=addBiz(rd(),1);save()};
+window.plan=id=>{S.orders.find(x=>x.id===id).day=rd();save()};
+$('rDate').onchange=renderAll;
+$('rAll').onclick=()=>{const s=runStops().slice(0,10);if(!s.length)return alert('No stops for this day.');const l=s.pop();open('https://www.google.com/maps/dir/?api=1&travelmode=driving&destination='+encodeURIComponent(place(l))+(s.length?'&waypoints='+encodeURIComponent(s.map(place).join('|')):''),'_blank','noopener')};
+$('dDate').value=$('vConf').value=$('rDate').value=today();show('dash');
+async function pull(manual,force){if(!S.biz.url)return;setSync('checking…');try{const r=await fetch(S.biz.url+(S.biz.url.includes('?')?'&':'?')+'key='+encodeURIComponent(S.biz.key||''));let d;try{d=await r.json()}catch(e){setSync('Apps Script not updated: Deploy, New version',true);if(S.ts)ready=true;if(manual)alert('The Apps Script is the old version. Paste the new Code.gs, then Deploy > Manage deployments > Edit > New version > Deploy.');return}
+ if(!d.ok){setSync('wrong sync password',true);if(manual)alert('Wrong sync password.');return}
+ if(!d.data){ready=true;syncState();setSync('Sheet empty, sending…');if(manual)alert('The Sheet was empty, so this device is sending its data.');return}
+ const before=sig(S),b=S.biz;
+ if(force||isEmpty()||!S.ts){S=Object.assign(S,d.data);S.biz={...d.data.biz,url:b.url,key:b.key};S.del=d.data.del||{}}else merge(d.data);
+ ready=true;takeSnap();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+ const changed=before!==sig(S);if(changed)renderAll();
+ setSync((changed?'updated from other device ':'up to date ')+hm());
+ if(!force&&sig(S)!==sig(d.data))syncState();
+ if(manual)alert(changed?'Updated from Google Sheet.':'This device is already up to date.')}catch(e){setSync('offline, showing saved data',true);if(manual)alert('Could not reach the Sheet. Check the URL, and that deployment access is Anyone.')}}
+$('pullNow').onclick=()=>{if(!S.biz.url)return alert('Save the sync URL and password first.');if(!isEmpty()&&!confirm('Replace this device\'s data with the Sheet\'s data?'))return;pull(true,true)};
+S.del=S.del||{};takeSnap();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});addEventListener('focus',()=>pull());setInterval(()=>{if(!document.hidden&&ready)pull()},20000);pull();
+try{if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
+</script></body></html>
